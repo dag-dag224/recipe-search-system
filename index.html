@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>レシピ検索</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+    <script type="module" src="./js/main.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>レシピ検索</h1>
+        <p>余っている食材から、料理を探してみましょう。</p>
+    </header>
+
+    <main>
+        <!-- 読み込み状況や処理結果 -->
+        <p id="status-message" role="status" aria-live="polite">
+            レシピデータを読み込んでいます。
+        </p>
+
+        <!-- エラーメッセージ -->
+        <p id="error-message" role="alert" hidden></p>
+
+        <!-- 検索画面 -->
+        <section id="search-screen" aria-labelledby="search-heading">
+            <h2 id="search-heading">食材から検索</h2>
+
+            <form id="search-form">
+                <div class="form-group">
+                    <label for="search-ingredient">食材名</label>
+
+                    <input
+                        type="text"
+                        id="search-ingredient"
+                        name="ingredient"
+                        placeholder="例：キャベツ"
+                        aria-describedby="search-help"
+                        autocomplete="off"
+                        required
+                        disabled
+                    >
+
+                    <p id="search-help">
+                        全角カタカナで、食材を1つ入力してください。
+                    </p>
+                </div>
+
+                <button type="submit" id="search-button" disabled>
+                    検索
+                </button>
+            </form>
+
+            <section
+                id="search-results"
+                aria-labelledby="results-heading"
+                aria-live="polite"
+            >
+                <h3 id="results-heading">検索結果</h3>
+
+                <p id="result-message">
+                    食材を入力して検索してください。
+                </p>
+
+                <!-- JavaScriptで料理名のli要素を追加する -->
+                <ul id="recipe-list"></ul>
+            </section>
+
+            <button type="button" id="open-add-button" disabled>
+                レシピを追加する
+            </button>
+        </section>
+
+        <!-- 追加画面：最初は非表示 -->
+        <section
+            id="add-screen"
+            aria-labelledby="add-heading"
+            hidden
+        >
+            <h2 id="add-heading">レシピ追加</h2>
+
+            <form id="add-form">
+                <div class="form-group">
+                    <label for="recipe-name">料理名</label>
+
+                    <input
+                        type="text"
+                        id="recipe-name"
+                        name="recipeName"
+                        placeholder="例：肉じゃが"
+                        aria-describedby="recipe-name-help"
+                        required
+                    >
+
+                    <p id="recipe-name-help">
+                        料理名には半角カンマを入れないでください。
+                    </p>
+                </div>
+
+                <div class="form-group">
+                    <label for="ingredient-names">材料名</label>
+
+                    <input
+                        type="text"
+                        id="ingredient-names"
+                        name="ingredientNames"
+                        placeholder="例：ジャガイモ,タマネギ,ニンジン"
+                        aria-describedby="ingredients-help"
+                        autocomplete="off"
+                        required
+                    >
+
+                    <p id="ingredients-help">
+                        材料は全角カタカナで入力し、
+                        複数ある場合は半角カンマ「,」で区切ってください。
+                    </p>
+                </div>
+
+                <p>
+                    追加したデータは、この端末のブラウザーに保存します。
+                    他の端末とは自動共有されません。
+                </p>
+
+                <div class="button-group">
+                    <button type="submit" id="confirm-add-button">
+                        確定
+                    </button>
+
+                    <button type="button" id="back-button">
+                        戻る
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <noscript>
+            <p>
+                このアプリを使うには、
+                ブラウザーのJavaScriptを有効にしてください。
+            </p>
+        </noscript>
+    </main>
+</body>
+</html>
