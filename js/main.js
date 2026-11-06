@@ -69,13 +69,21 @@ function displaySearchResults() {
         return;
     }
 
-    const results = recipeSearch.searchRecipes(ingredientName);
-
-    if (results.length === 0) {
+    // 全角カタカナ以外が含まれていれば、検索せずに案内する
+    if (!/^[ァ-ヶー]+$/.test(ingredientName)) {
         resultMessage.textContent =
-            `「${ingredientName}」に該当する料理はありません。`;
+            "食材名は全角カタカナで入力してください。";
         return;
     }
+
+// 全角カタカナなら検索する
+const results = recipeSearch.searchRecipes(ingredientName);
+
+if (results.length === 0) {
+    resultMessage.textContent =
+        `「${ingredientName}」に該当する料理はありません。`;
+    return;
+}
 
     resultMessage.textContent =
         `「${ingredientName}」を使う料理：${results.length}件`;
