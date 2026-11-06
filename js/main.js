@@ -81,10 +81,21 @@ function displaySearchResults() {
         `「${ingredientName}」を使う料理：${results.length}件`;
 
     for (const recipeName of results) {
+        
         const item = document.createElement("li");
-
-        // 入力された料理名は文字として表示する
-        item.textContent = recipeName;
+        const link = document.createElement("a");
+        
+        // 料理名を使って検索URLを作る
+        const keyword = encodeURIComponent(recipeName + " レシピ");
+        
+        link.href = "https://www.google.com/search?q=" + keyword;
+        link.textContent = recipeName;
+        
+        // 新しいタブで検索結果を開く
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        
+        item.appendChild(link);
         recipeList.appendChild(item);
     }
 }
