@@ -1,3 +1,9 @@
+// 食材名として受け付ける形（全角カタカナと長音記号のみ）
+// 検索と追加で同じ判定を使い、検索できない食材名が登録されないようにする
+export function isKatakanaName(text) {
+    return /^[ァ-ヶー]+$/.test(text);
+}
+
 export class RecipeSearch {
 
     constructor(recipes) {
@@ -53,6 +59,23 @@ export class RecipeSearch {
 
         if (ingredients.length === 0) {
             throw new Error("材料名を1つ以上入力してください。");
+        }
+
+        // 検索欄は全角カタカナしか受け付けないため、追加時も同じ形に限る
+        for (const ingredient of ingredients) {
+            if (isKatakanaName(ingredient)) {
+                continue;
+            }
+
+            if (/[、，]/.test(ingredient)) {
+                throw new Error(
+                    "材料は「、」ではなく半角カンマ「,」で区切ってください。"
+                );
+            }
+
+            throw new Error(
+                `材料名「${ingredient}」は全角カタカナで入力してください。`
+            );
         }
 
         // Setを使い、入力内で重複した材料名を取り除く
