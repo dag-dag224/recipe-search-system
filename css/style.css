@@ -141,6 +141,86 @@ input:disabled {
     cursor: not-allowed;
 }
 
+/* 入力候補：検索欄のすぐ下に重ねて出す */
+.combobox {
+    position: relative;
+}
+
+#search-suggestions {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: 10;
+    margin: 0;
+    padding: 4px;
+    border: 1px solid #87998c;
+    border-radius: 6px;
+    background-color: white;
+    box-shadow: 0 6px 16px rgba(37, 51, 42, 0.18);
+    list-style: none;
+}
+
+#search-suggestions [role="option"] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 48px;
+    padding: 8px 12px;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    overflow-wrap: anywhere;
+}
+
+#search-suggestions [role="option"]:hover {
+    background-color: #edf3ee;
+}
+
+/* ↑↓で選んでいる候補：色だけでなく枠線でも分かるようにする */
+#search-suggestions [role="option"][aria-selected="true"] {
+    border-color: #1565c0;
+    background-color: #e3eefb;
+}
+
+#search-suggestions .suggestion-name {
+    font-weight: bold;
+}
+
+#search-suggestions .suggestion-count {
+    flex-shrink: 0;
+    color: #526057;
+    font-size: 0.85rem;
+}
+
+/* パソコン（マウス操作）では候補を検索欄の上に出す
+   IMEの予測変換の窓が入力位置のすぐ下に出て、候補を隠してしまうため */
+@media (hover: hover) and (pointer: fine) {
+    #search-suggestions.is-above {
+        top: auto;
+        bottom: calc(100% + 4px);
+    }
+
+    #search-suggestions [role="option"] {
+        min-height: 40px;
+        padding: 4px 12px;
+    }
+}
+
+/* 画面には出さず、読み上げソフトにだけ伝える */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 /* 検索ボタン */
 #search-button {
     width: 100%;
@@ -156,6 +236,7 @@ input:disabled {
 #result-message {
     margin: 0 0 12px;
     overflow-wrap: anywhere;
+    white-space: pre-line;
 }
 
 #recipe-list {
@@ -172,6 +253,13 @@ input:disabled {
     border-radius: 6px;
     background-color: #f0f6f1;
     overflow-wrap: anywhere;
+}
+
+/* 料理名の下に出す「使う食材」 */
+#recipe-list .matched-ingredients {
+    margin: 4px 0 0;
+    color: #526057;
+    font-size: 0.85rem;
 }
 
 /* 追加画面を開くボタン */
