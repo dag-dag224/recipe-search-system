@@ -33,19 +33,45 @@
                 <div class="form-group">
                     <label for="search-ingredient">食材名</label>
 
-                    <input
-                        type="text"
-                        id="search-ingredient"
-                        name="ingredient"
-                        placeholder="例：キャベツ"
-                        aria-describedby="search-help"
-                        autocomplete="off"
-                        required
-                        disabled
-                    >
+                    <!-- 候補を検索欄のすぐ下に重ねるための入れ物 -->
+                    <div class="combobox">
+                        <input
+                            type="text"
+                            id="search-ingredient"
+                            name="ingredient"
+                            placeholder="例：キャベツ,ニンジン"
+                            role="combobox"
+                            aria-autocomplete="list"
+                            aria-expanded="false"
+                            aria-controls="search-suggestions"
+                            aria-describedby="search-help"
+                            autocomplete="off"
+                            required
+                            disabled
+                        >
+
+                        <!-- 入力候補：JavaScriptで li 要素を追加する -->
+                        <ul
+                            id="search-suggestions"
+                            role="listbox"
+                            aria-label="食材の候補"
+                            hidden
+                        ></ul>
+                    </div>
+
+                    <!-- 候補の件数を読み上げるための領域（画面には出さない） -->
+                    <p
+                        id="suggestions-status"
+                        class="visually-hidden"
+                        role="status"
+                        aria-live="polite"
+                    ></p>
 
                     <p id="search-help">
-                        <strong>全角カタカナで</strong>、食材を1つ入力してください。
+                        食材を<strong>全角カタカナで</strong>入力してください。
+                        複数あるときは「,」「、」かスペースで区切ります（10個まで）。
+                        たくさんの食材を使う料理から順に、50件まで表示します。
+                        ひらがなで打つと、食材の候補が出ます。
                     </p>
                 </div>
 
